@@ -1,7 +1,8 @@
-import React from "react"
-import Layout from "./../components/layout.js"
-import { graphql } from "gatsby"
-import Image from "gatsby-image"
+import React from "react";
+import Layout from "./../components/layout.js";
+import { graphql } from "gatsby";
+
+import Gallery from "../components/gallery.js";
 
 export const query = graphql`
   {
@@ -14,6 +15,8 @@ export const query = graphql`
           media {
             asset {
               fluid {
+                aspectRatio
+                src
                 ...GatsbySanityImageFluid
               }
             }
@@ -22,15 +25,24 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default ({ data }) => (
-  <Layout>
-    {data.allSanityMoment.edges.map(({ node }) => (
+export default ({ data }) => {
+  return (
+    <Layout>
+      {/* data.allSanityMoment.edges.map(({ node }) => (
       <>
         <h3>{node.title}</h3>
         <Image fluid={node.media.asset.fluid} />
       </>
-    ))}
-  </Layout>
-)
+    )) */}
+      <Gallery
+        images={data.allSanityMoment.edges.map(({ node }) => ({
+          ...node.media.asset.fluid,
+          caption: node.title,
+        }))}
+        itemsPerRow={[2, 3]}
+      />
+    </Layout>
+  );
+};
