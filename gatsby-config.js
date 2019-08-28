@@ -5,5 +5,21 @@
  */
 
 module.exports = {
-  /* Your site config here */
+  siteMetadata: {
+    title: "Weird Moments",
+  },
+  plugins: [
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: "gatsby-source-sanity",
+      options: {
+        projectId: "ql1gb0zv",
+        dataset: "production",
+        token: process.env.MY_SANITY_TOKEN,
+        overlayDrafts: true,
+        watchMode: true,
+      },
+    },
+  ],
 }
